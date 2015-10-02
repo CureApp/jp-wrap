@@ -13,11 +13,9 @@ class Word
     ###
     constructor: (@str = '') ->
 
-        zenkakus = (c for c in @str when not c.match /[ -~]/).length
+        @width = @constructor.widthByStr @str
 
-        @width = zenkakus + @str.length
-
-        @isAlphaNumeric = !!(@str.match /[a-zA-Z0-9]$/) # 半角英数で終わっているか
+        @isAlphaNumeric = !!(@str.match /\w$/) # 半角英数で終わっているか
 
         @lbStr = null
 
@@ -75,6 +73,8 @@ class Word
     ###
     appendLineBreak: (@lbStr) ->
 
+        @isAlphaNumeric = false
+
         return @
 
 
@@ -100,6 +100,30 @@ class Word
     hasLineBreak: ->
 
         @lbStr?
+
+
+    ###*
+    文字列の幅を計算
+    現時点ではASCIIおよび半角カタカナ以外の半角は認識できない
+
+    @method widthByStr
+    @private
+    @static
+    ###
+    @widthByStr: (str = '') ->
+
+        fullWidths = (c for c in str when not c.match @halfWidthRegex).length
+        return fullWidths + str.length
+
+
+    ###*
+    ASCII文字と半角カタカナにマッチする正規表現
+
+    @property {RegExp} halfWidthRegex
+    @private
+    @static
+    ###
+    @halfWidthRegex: new RegExp('[ -~\uFF61-\uFF64\uFF65-\uFF9F]')
 
 
 module.exports = Word
