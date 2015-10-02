@@ -7,7 +7,7 @@
 
 ```js
 var wrap = require('jp-wrap')(20);
-console.log(wrap('「僕らはみんな、肉だ!」って、substackが言ってたよ。'));
+console.log(wrap('「僕らはみんな、肉だ」とかって、substackが言ってたよ。'));
 ```
 
 output:

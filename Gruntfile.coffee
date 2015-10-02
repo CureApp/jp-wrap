@@ -6,7 +6,7 @@ module.exports = (grunt) ->
         'mocha-chai-sinon':
             spec:
                 src: [
-                    'spec/lib/*.coffee'
+                    'spec/**/*.coffee'
                 ]
                 options:
                     ui: 'bdd'
