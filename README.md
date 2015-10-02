@@ -1,5 +1,4 @@
 # jp-wrap
-yet another word-wrap library
 日本語の禁則処理に対応したword-wrap
 
 ## example
@@ -8,10 +7,7 @@ yet another word-wrap library
 
 ```js
 var wrap = require('jp-wrap')(20);
-
-console.log(wrap(
-    '「僕らはみんな、肉だ!」って、substackが言ってたよ。'
-));
+console.log(wrap('「僕らはみんな、肉だ!」って、substackが言ってたよ。'));
 ```
 
 output:
@@ -39,6 +35,7 @@ console.log(wrap(
 ```
 
 output:
+
                         CureAppは、アプリを薬のように医師が処方                     
                         する時代を創っていく会社です。20世紀の医                    
                         学は感染症をcontrollableなものとしまし                      
@@ -75,15 +72,6 @@ var jpWrap = require('jp-wrap');
 2つの数字が与えられたときは
 文字列を与えると`stop - start`の幅でwrapし、左右にstartだけのpaddingをつける関数 を返す.
 
-### もっと内部をさわりたい方
-
-```js
-var JpWrap = require('jp-wrap').JpWrap;
-```
-クラスが取れます。
-API docsは準備中、しかしyuidocで生成されるようコメントは詳しく書いています。
-
-
 ### options
 | name           | type    | 意味                                        | デフォルト |
 |:---------------|:--------|:--------------------------------------------|:-----------|
@@ -93,7 +81,14 @@ API docsは準備中、しかしyuidocで生成されるようコメントは詳
 | fullWidthSpace | boolean | 全角スペースが行頭にあった場合削除するか    | true       |
 
 
+### もっと内部をさわりたい方
+
+```js
+var JpWrap = require('jp-wrap').JpWrap;
 ```
+クラスが取れます。
+API docsは準備中、しかしyuidocで生成されるようコメントは詳しく書いています。
+
 
 ## LICENSE
 MIT
