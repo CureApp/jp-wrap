@@ -1,0 +1,34 @@
+{
+  "name": "jp-wrap",
+  "version": "1.9.6",
+  "description": "Japanese word wrap",
+  "main": "dist/lib/jp-wrap.js",
+  "scripts": {
+    "test": "grunt"
+  },
+  "bin": {
+    "jp-wrap": "./bin/jp-wrap"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CureApp/jp-wrap.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CureApp/jp-wrap/issues"
+  },
+  "homepage": "https://github.com/CureApp/jp-wrap",
+  "keywords": [
+    "Japanese",
+    "wordwrap"
+  ],
+  "author": "CureApp, Inc.",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "coffee-script": "^1.10.0",
+    "grunt": "^0.4.5",
+    "grunt-contrib-coffee": "^0.13.0",
+    "grunt-mocha-chai-sinon": "0.0.9"
+  }
+}
