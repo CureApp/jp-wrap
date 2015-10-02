@@ -2,7 +2,7 @@
   "name": "jp-wrap",
   "version": "0.0.0",
   "description": "Japanese word wrap",
-  "main": "dist/jp-wrap.js",
+  "main": "dist/jp-wrap-entry.js",
   "scripts": {
     "test": "grunt"
   },
