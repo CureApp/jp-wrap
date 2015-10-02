@@ -31,6 +31,25 @@ class Word
         @str[@str.length - 1]
 
 
+
+    ###*
+    頭のスペースを取り除く 全角文字も取り除く場合は第1引数をtrueに
+
+    @method ltrim
+    @param {Boolean} fullWidths 全角スペースも取り除く
+    @return {Word} this
+    ###
+    ltrim: (fullWidthSpace = false) ->
+
+        regex = if fullWidthSpace then /^([\s\u3000]+)/ else /^( +)/
+
+        if matched = @str.match regex
+            @str = @str.slice(matched[1].length)
+            @width -= @constructor.widthByStr matched[1]
+
+        return @
+
+
     ###*
     与えられたWordを末尾に追加
 

@@ -11,17 +11,22 @@ Word = require './word'
 ###
 class JpWrap
 
+    DEFAULT_WIDTH: 100
+
     ###*
     @constructor
+    @param {Number} [width=100] 半角1, 全角2としたときの全体の幅
     @param {Object} [options]
     @param {Boolean} [options.half] 半角文字の行頭禁則処理を行うか
     @param {Boolean} [options.trim=true] 入力文字列の改行を取り除くかどうか
     @param {Boolean} [options.breakAll] trueだとcssのword-break:break-allと同じ挙動をする
+    @param {Boolean} [options.fullWidthSpace=true] 全角スペースが行頭にあった場合削除するか
     ###
-    constructor: (options = {}) ->
+    constructor: (@width = @DEFAULT_WIDTH, options = {}) ->
 
         @trim = !! (options.trim ? true)
         @breakAll = !! options.breakAll
+        @fullWidthSpace = !! (options.fullWidthSpace ? true)
 
         regexStr = @notStartingChars
 
@@ -33,40 +38,52 @@ class JpWrap
         @notEndingCharRegExp = @constructor.getRegexFromStrs @notEndingChars
 
     ###*
-    textが、幅: width (半角1, 全角2とする) で、どのようにsplitされるか
-    戦略：文字列を単語ごとに分解してから、行を埋めていく
+    textを分割し、行(String)の配列を取得
 
     @method wrap
     @public
     @param {String} text
-    @param {Number} width
     @return {Array(String)} lines 分割された行の配列
     ###
-    wrap: (text, width) ->
+    wrap: (text) ->
+
+        (line.str for line in @getLines(text))
+
+
+    ###*
+    textを分割し、行(Wordオブジェクト)の配列を取得
+    戦略：文字列を単語ごとに分解してから、行を埋めていく
+
+    @method getLines
+    @public
+    @param {String} text
+    @return {Array(String)} lines 分割された行の配列
+    ###
+    getLines: (text) ->
 
         lines = []
 
-        words = @splitTextIntoWords(text, width)
+        words = @splitTextIntoWords(text)
 
         currentLine = null
 
         for word in words
 
             if not currentLine?
-                currentLine = word
+                currentLine = word.ltrim(@fullWidthSpace)
 
             else if currentLine.hasLineBreak()
-                lines.push currentLine.str
-                currentLine = word
+                lines.push currentLine
+                currentLine = word.ltrim(@fullWidthSpace)
 
-            else if currentLine.width + word.width <= width
+            else if currentLine.width + word.width <= @width
                 currentLine.append word
 
             else
-                lines.push currentLine.str
-                currentLine = word
+                lines.push currentLine
+                currentLine = word.ltrim(@fullWidthSpace)
 
-        lines.push currentLine.str if currentLine.hasStr()
+        lines.push currentLine if currentLine.hasStr()
 
         return lines
 
@@ -78,10 +95,9 @@ class JpWrap
     @method splitTextIntoWords
     @private
     @param {String} text
-    @param {Number} maxWidth 単語の最大サイズ
     @return {Array(Word)}
     ###
-    splitTextIntoWords: (text, maxWidth) ->
+    splitTextIntoWords: (text) ->
 
         words = []
 
@@ -99,7 +115,7 @@ class JpWrap
 
             word = new Word(c)
 
-            if @isJoinable(currentWord, word, maxWidth)
+            if @isJoinable(currentWord, word)
 
                 currentWord.append word
 
@@ -119,9 +135,9 @@ class JpWrap
     @param {Word} word1
     @param {Word} word2
     ###
-    isJoinable: (word1, word2, maxWidth) ->
+    isJoinable: (word1, word2) ->
 
-        return false if word1.width + word2.width > maxWidth
+        return false if word1.width + word2.width > @width
 
         return true if word1.last()?.match @notEndingCharRegExp
 

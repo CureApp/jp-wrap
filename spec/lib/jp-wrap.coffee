@@ -14,22 +14,28 @@ describe 'JpWrap', ->
 
     describe 'constructor', ->
 
+        it 'widthプロパティを第1引数から設定 デフォルトは100', ->
+
+            expect(new JpWrap().width).to.equal 100
+            expect(new JpWrap(10).width).to.equal 10
+
+
         it 'trimプロパティをオプションから設定 デフォルトはtrue', ->
             expect(new JpWrap().trim).to.be.true
-            expect(new JpWrap(trim: true).trim).to.be.true
-            expect(new JpWrap(trim: false).trim).to.be.false
-            expect(new JpWrap(trim: null).trim).to.be.true
-            expect(new JpWrap(trim: 0).trim).to.be.false
+            expect(new JpWrap(100, trim: true).trim).to.be.true
+            expect(new JpWrap(100, trim: false).trim).to.be.false
+            expect(new JpWrap(100, trim: null).trim).to.be.true
+            expect(new JpWrap(100, trim: 0).trim).to.be.false
 
 
         it 'breakAllプロパティをオプションから設定 デフォルトはfalse', ->
 
             expect(new JpWrap().breakAll).to.be.false
-            expect(new JpWrap(breakAll: false).breakAll).to.be.false
-            expect(new JpWrap(breakAll: true).breakAll).to.be.true
-            expect(new JpWrap(breakAll: null).breakAll).to.be.false
-            expect(new JpWrap(breakAll: 0).breakAll).to.be.false
-            expect(new JpWrap(breakAll: 1).breakAll).to.be.true
+            expect(new JpWrap(100, breakAll: false).breakAll).to.be.false
+            expect(new JpWrap(100, breakAll: true).breakAll).to.be.true
+            expect(new JpWrap(100, breakAll: null).breakAll).to.be.false
+            expect(new JpWrap(100, breakAll: 0).breakAll).to.be.false
+            expect(new JpWrap(100, breakAll: 1).breakAll).to.be.true
 
 
         it '2つの正規表現オブジェクトを生成し保持', ->
@@ -41,7 +47,7 @@ describe 'JpWrap', ->
         it 'halfオプションでnotStartingCharRegExpの正規表現の幅が広がる', ->
 
             regexNonHalf = new JpWrap().notStartingCharRegExp
-            regexHalf    = new JpWrap(half: true).notStartingCharRegExp
+            regexHalf    = new JpWrap(100, half: true).notStartingCharRegExp
 
             expect(regexHalf.toString()).to.have.length.above regexNonHalf.toString().length
 
@@ -53,7 +59,7 @@ describe 'JpWrap', ->
             word1 = new Word('俺とお前と')
             word2 = new Word('大五郎')
 
-            expect(new JpWrap().isJoinable(word1, word2, 12)).to.be.false
+            expect(new JpWrap(12).isJoinable(word1, word2)).to.be.false
 
 
         it 'word1の最後が、末尾禁則の文字にマッチしていたらtrue', ->
@@ -61,15 +67,14 @@ describe 'JpWrap', ->
             word1 = new Word('しん「')
             word2 = new Word('こっちこいよ」')
 
-            expect(new JpWrap().isJoinable(word1, word2, 100)).to.be.true
-
+            expect(new JpWrap().isJoinable(word1, word2)).to.be.true
 
         it 'word1の最後が、末尾禁則の文字にマッチしていたらbreakAll:trueでもtrue', ->
 
             word1 = new Word('しん「')
             word2 = new Word('こっちこいよ」')
 
-            expect(new JpWrap(breakAll: true).isJoinable(word1, word2, 100)).to.be.true
+            expect(new JpWrap(100, breakAll: true).isJoinable(word1, word2)).to.be.true
 
 
         it 'word1の最後が、行末禁則の文字にマッチしなくてbreakAll:trueならfalse', ->
@@ -77,7 +82,7 @@ describe 'JpWrap', ->
             word1 = new Word('iPad ')
             word2 = new Word('Air')
 
-            expect(new JpWrap(breakAll: true).isJoinable(word1, word2, 100)).to.be.false
+            expect(new JpWrap(100, breakAll: true).isJoinable(word1, word2)).to.be.false
 
 
         it 'word1もword2も半角英数で終わっていたらtrue', ->
@@ -85,7 +90,7 @@ describe 'JpWrap', ->
             word1 = new Word('room')
             word2 = new Word('335')
 
-            expect(new JpWrap().isJoinable(word1, word2, 100)).to.be.true
+            expect(new JpWrap().isJoinable(word1, word2)).to.be.true
 
 
         it 'word2が行頭禁則の文字にマッチしてたらtrue', ->
@@ -93,7 +98,7 @@ describe 'JpWrap', ->
             word1 = new Word('モーニングなんとか')
             word2 = new Word('。')
 
-            expect(new JpWrap().isJoinable(word1, word2, 100)).to.be.true
+            expect(new JpWrap().isJoinable(word1, word2)).to.be.true
 
 
         it 'word2が行頭禁則の文字にマッチしてなければfalse', ->
@@ -101,7 +106,7 @@ describe 'JpWrap', ->
             word1 = new Word('ドラゴンクエスト')
             word2 = new Word('Ⅴ')
 
-            expect(new JpWrap().isJoinable(word1, word2, 100)).to.be.false
+            expect(new JpWrap().isJoinable(word1, word2)).to.be.false
 
 
 
@@ -109,14 +114,14 @@ describe 'JpWrap', ->
 
         it '日本語は1文字ずつに分けられる', ->
 
-            words = new JpWrap().splitTextIntoWords('つのだ☆なんとか', 100)
+            words = new JpWrap().splitTextIntoWords('つのだ☆なんとか')
 
             expect(words).to.have.length 8
 
 
         it 'alphanumericは1単語にまとめられる', ->
 
-            words = new JpWrap().splitTextIntoWords('それevidenceはあるのか', 100)
+            words = new JpWrap().splitTextIntoWords('それevidenceはあるのか')
 
             expect(words).to.have.length 8
 
@@ -126,7 +131,7 @@ describe 'JpWrap', ->
 
         it '行頭禁則文字は前の文字にまとめられる', ->
 
-            words = new JpWrap().splitTextIntoWords('藤岡さん、電話です。', 100)
+            words = new JpWrap().splitTextIntoWords('藤岡さん、電話です。')
 
             expect(words).to.have.length 8
 
@@ -136,7 +141,7 @@ describe 'JpWrap', ->
 
         it '行頭禁則文字でも前の文字がなければ単独で存在', ->
 
-            words = new JpWrap().splitTextIntoWords('。だとさ', 100)
+            words = new JpWrap().splitTextIntoWords('。だとさ')
 
             expect(words).to.have.length 4
 
@@ -145,7 +150,7 @@ describe 'JpWrap', ->
 
         it '行末禁則文字は次の文字と繋げられる', ->
 
-            words = new JpWrap().splitTextIntoWords('ハチ「渋谷へようこそ」', 100)
+            words = new JpWrap().splitTextIntoWords('ハチ「渋谷へようこそ」')
 
             expect(words).to.have.length 9
 
@@ -155,7 +160,7 @@ describe 'JpWrap', ->
 
         it '長い単語は、widthまでに分割される', ->
 
-            words = new JpWrap().splitTextIntoWords('今日本に必要なinternationalization。', 10)
+            words = new JpWrap(10).splitTextIntoWords('今日本に必要なinternationalization。')
 
             expect(words).to.have.length 10
 
@@ -166,7 +171,7 @@ describe 'JpWrap', ->
 
         it '改行文字はtrimされる', ->
 
-            words = new JpWrap().splitTextIntoWords('好きな人が、\nできました。', 10)
+            words = new JpWrap().splitTextIntoWords('好きな人が、\nできました。')
 
             expect(words).to.have.length 10
 
@@ -176,7 +181,7 @@ describe 'JpWrap', ->
 
         it 'trimがfalseの場合改行文字でwordが分かれる', ->
 
-            words = new JpWrap(trim: false).splitTextIntoWords('loop\nback', 10)
+            words = new JpWrap(100, trim: false).splitTextIntoWords('loop\nback')
 
             expect(words).to.have.length 2
 
@@ -191,7 +196,7 @@ describe 'JpWrap', ->
 
             text = 'インスタンスの生成ですが、factory.createFromObject(obj) してください。'
 
-            lines = new JpWrap().wrap(text, 20)
+            lines = new JpWrap(20).wrap(text)
 
             expect(lines).to.eql [
                 'インスタンスの生成で'
@@ -205,7 +210,7 @@ describe 'JpWrap', ->
 
             text = 'WYSIWYGは、what_you_see_is_what_you_getのこと。'
 
-            lines = new JpWrap().wrap(text, 20)
+            lines = new JpWrap(20).wrap(text)
 
             expect(lines).to.eql [
                 'WYSIWYGは、'
@@ -214,11 +219,49 @@ describe 'JpWrap', ->
             ]
 
 
+        it '行頭は半角スペースで始まらない', ->
+
+            text = 'in the town, where I was born'
+
+            lines = new JpWrap(20).wrap(text)
+
+            expect(lines).to.eql [
+                'in the town, where I'
+                'was born'
+            ]
+
+
+        it '行頭は全角スペースで始まらない', ->
+
+            text = 'in the town, where I　was born'
+
+            lines = new JpWrap(20).wrap(text)
+
+            expect(lines).to.eql [
+                'in the town, where I'
+                'was born'
+            ]
+
+
+
+        it 'fullWidthSpace: false の時は行頭は全角スペースで始まる', ->
+
+            text = 'in the town, where I　was born'
+
+            lines = new JpWrap(20, fullWidthSpace: false).wrap(text)
+
+            expect(lines).to.eql [
+                'in the town, where I'
+                '　was born'
+            ]
+
+
+
         it '末尾に「 が来ないように、来そうなときは次の行に移る', ->
 
             text = 'ゼンメルワイスは、「患者を殺していたのは医師の手である」と言った。'
 
-            lines = new JpWrap().wrap(text, 20)
+            lines = new JpWrap(20).wrap(text)
 
             expect(lines).to.eql [
                 'ゼンメルワイスは、'
@@ -232,7 +275,7 @@ describe 'JpWrap', ->
 
             text = '残り物には夏服がある。もう秋だ。'
 
-            lines = new JpWrap().wrap(text, 20)
+            lines = new JpWrap(20).wrap(text)
 
             expect(lines).to.eql [
                 '残り物には夏服があ'
@@ -244,7 +287,7 @@ describe 'JpWrap', ->
 
             text = '1. 東京\n2. 有楽町\n3. 新橋'
 
-            lines = new JpWrap(trim: false).wrap(text, 20)
+            lines = new JpWrap(20, trim: false).wrap(text)
 
             expect(lines).to.eql [
                 '1. 東京'
@@ -257,7 +300,7 @@ describe 'JpWrap', ->
 
             text = '1. 東京\n2. 有楽町\n3. 新橋'
 
-            lines = new JpWrap(trim: false).wrap(text, 7)
+            lines = new JpWrap(7, trim: false).wrap(text)
 
             expect(lines).to.eql [
                 '1. 東京'
@@ -271,7 +314,7 @@ describe 'JpWrap', ->
 
             text = 'WYSIWYGは、what_you_see_is_what_you_getのこと。'
 
-            lines = new JpWrap(breakAll: true).wrap(text, 20)
+            lines = new JpWrap(20, breakAll: true).wrap(text)
 
             expect(lines).to.eql [
                 'WYSIWYGは、what_you_'

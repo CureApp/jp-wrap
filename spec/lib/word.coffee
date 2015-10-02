@@ -79,6 +79,38 @@ describe 'Word', ->
 
 
 
+    describe 'ltrim', ->
+
+        it 'strが空白を含まないなら何もしない', ->
+
+            expect(new Word('あいう').ltrim().str).to.equal 'あいう'
+
+
+        it 'strが空白を含むなら空白のみ削除する', ->
+
+            word = new Word('   it was rainy ').ltrim()
+
+            expect(word.str).to.equal 'it was rainy '
+            expect(word.width).to.equal 13
+
+
+        it '引数がないなら、strが全角を含んでも半角空白のみ削除する', ->
+
+            word = new Word(' 　  it was rainy ').ltrim()
+
+            expect(word.str).to.equal '　  it was rainy '
+            expect(word.width).to.equal 17
+
+
+        it '引数がtrueなら、全角空白も削除する', ->
+
+            word = new Word(' 　  it was rainy ').ltrim(true)
+
+            expect(word.str).to.equal 'it was rainy '
+            expect(word.width).to.equal 13
+
+
+
     describe 'append', ->
 
         it '文字を末尾に連結する', ->
