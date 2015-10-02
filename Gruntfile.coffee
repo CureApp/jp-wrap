@@ -15,7 +15,7 @@ module.exports = (grunt) ->
 
             single:
                 src: [
-                    grunt.option('file') ? 'spec/base-repository.coffee'
+                    grunt.option('file') ? 'spec/lib/jp-wrap.coffee'
                 ]
                 options:
                     ui: 'bdd'

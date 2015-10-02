@@ -97,14 +97,6 @@ module.exports =
   # not include combine
   "Katakana": "\\u30A1-\\u30FA"
 
-  # A.17 Math symbols (cl-17)
-  # Basic Latin -> Halfwidth and Fullwidth Forms
-  # add U+2200-U+22FF Mathematical Operators
-  #   include most math symbols
-  #   exclude "−" (U+2212) "∓" (U+2213)
-  "Math symbols": "＝＜＞\\u2200-\\u2211\\u2214-\\u22FF⇒⇔↔"
-  "Math symbols ASCII": "=<>"
-
   # A.18 Math operators (cl-18)
   # Basic Latin -> Halfwidth and Fullwidth Forms
   # add MINUS-HYPHEN

@@ -16,7 +16,7 @@ var JpWrap = require('jp-wrap')
 jpWrap = new JpWrap();
 
 var text = '鈴木：「もう、wrapとかどうでもいいや。。。」\n 佐竹：「ちょっと！？それは困るよ」'
-var lines = jpWrap.getLines(text, 10); // 10 は、 半角10文字分
+var lines = jpWrap.wrap(text, 10); // 10 は、 半角10文字分
 ```
 
 ## LICENSE
