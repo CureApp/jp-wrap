@@ -4,13 +4,6 @@ Word = require '../../src/lib/word'
 
 describe 'JpWrap', ->
 
-    describe '@getRegexFromStrs', ->
-
-        it '与えられた複数の文字列にマッチする条件の正規表現を返す', ->
-
-            regex = JpWrap.getRegexFromStrs('misp')
-            expect('mississippi').to.match regex
-
 
     describe 'constructor', ->
 
@@ -38,18 +31,15 @@ describe 'JpWrap', ->
             expect(new JpWrap(100, breakAll: 1).breakAll).to.be.true
 
 
-        it '2つの正規表現オブジェクトを生成し保持', ->
 
-            expect(new JpWrap().notStartingCharRegExp).to.be.instanceof RegExp
-            expect(new JpWrap().notEndingCharRegExp).to.be.instanceof RegExp
+        it 'halfオプションをオプションから設定 デフォルトはfalse', ->
 
-
-        it 'halfオプションでnotStartingCharRegExpの正規表現の幅が広がる', ->
-
-            regexNonHalf = new JpWrap().notStartingCharRegExp
-            regexHalf    = new JpWrap(100, half: true).notStartingCharRegExp
-
-            expect(regexHalf.toString()).to.have.length.above regexNonHalf.toString().length
+            expect(new JpWrap().half).to.be.false
+            expect(new JpWrap(100, half: false).half).to.be.false
+            expect(new JpWrap(100, half: true).half).to.be.true
+            expect(new JpWrap(100, half: null).half).to.be.false
+            expect(new JpWrap(100, half: 0).half).to.be.false
+            expect(new JpWrap(100, half: 1).half).to.be.true
 
 
     describe 'isJoinable', ->
