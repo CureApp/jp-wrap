@@ -6,9 +6,6 @@
   "scripts": {
     "test": "grunt"
   },
-  "bin": {
-    "jp-wrap": "./bin/jp-wrap"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/CureApp/jp-wrap.git"
