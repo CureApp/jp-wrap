@@ -4,7 +4,10 @@
   "description": "Japanese word wrap",
   "main": "dist/jp-wrap-entry.js",
   "scripts": {
-    "test": "grunt"
+    "test": "grunt",
+    "web-browser-check": "grunt build && open test-tools/index.html",
+    "pack-check": "grunt build && node test-tools/run-packed.js"
+
   },
   "repository": {
     "type": "git",
@@ -20,12 +23,14 @@
   ],
   "author": "CureApp, Inc.",
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "coffee-script": "^1.10.0",
     "grunt": "^0.4.5",
+    "grunt-browserify": "^4.0.1",
     "grunt-contrib-coffee": "^0.13.0",
-    "grunt-mocha-chai-sinon": "0.0.9"
+    "grunt-contrib-uglify": "^0.9.2",
+    "grunt-mocha-chai-sinon": "0.0.9",
+    "titaniumifier": "^1.5.0"
   }
 }

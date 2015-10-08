@@ -1,0 +1,26 @@
+<html>
+<head>
+<meta charset="utf-8"></meta>
+<style>
+pre {
+    background-color: #eee;
+}
+</style>
+<script charset="utf-8" src="../dist/jp-wrap.min.js"></script>
+<script>
+function pre(str, stop, start) {
+    return '<pre>' + jpWrap(stop, start)(str) + '</pre>'
+}
+var text = [
+    '様々なプラットフォームで動作するJavaScriptでは、',
+    'ドメイン知識を様々なプラットフォームで利用できるようになります。',
+    'ドメイン知識は、基本的には論理であり、プラットフォームに依存しません。',
+    '（インフラ層とやり取りするレポジトリは例外です。ここをisomorphicにする方法もいずれご紹介します。）',
+    'どの環境でも同じように、ビジネスロジックを利用できる、というのがJavaScriptの強みです。'
+].join('')
+document.write(pre(text, 30, 80));
+</script>
+</head>
+<body>
+</body>
+</html>
