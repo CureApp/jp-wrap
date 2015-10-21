@@ -2,5 +2,3 @@
 version: 0.2.0
 files:
   package.json: '"version": "%.%.%",'
-  Gruntfile.coffee: currentVersion = 'v%.%.%'
-  dev-tools/distribute: VERSION="%.%.%"
