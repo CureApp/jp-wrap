@@ -45,6 +45,17 @@ module.exports = (grunt) ->
                 options:
                     bare: true
 
+        yuidoc:
+            options:
+                paths: [ 'src' ]
+                syntaxtype: 'coffee'
+                extension: '.coffee'
+
+            master:
+                options:
+                    outdir: 'doc'
+
+
 
     grunt.registerTask 'pack', ->
 
@@ -64,6 +75,7 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks 'grunt-contrib-coffee'
     grunt.loadNpmTasks 'grunt-contrib-uglify'
     grunt.loadNpmTasks 'grunt-browserify'
+    grunt.loadNpmTasks 'grunt-contrib-yuidoc'
 
     grunt.registerTask 'default', 'mocha-chai-sinon:spec'
     grunt.registerTask 'single', 'mocha-chai-sinon:single'

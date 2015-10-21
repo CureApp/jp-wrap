@@ -88,8 +88,8 @@ var jpWrap = require('jp-wrap');
 var JpWrap = require('jp-wrap').JpWrap;
 ```
 クラスが取れます。
-API docsは準備中、しかしyuidocで生成されるようコメントは詳しく書いています。
-
+こちらの仕様は
+[API docs](https://cureapp.github.io/jp-wrap/index.html) にあります。
 
 ## LICENSE
 MIT

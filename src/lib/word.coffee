@@ -2,7 +2,7 @@
 ###*
 文字 str とその幅 width を持つオブジェクト
 
-@class JpWrap
+@class Word
 @module jp-wrap
 ###
 class Word
