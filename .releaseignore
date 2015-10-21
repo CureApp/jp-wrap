@@ -1,0 +1,11 @@
+node_modules
+.editorconfig
+spec
+test-tools
+.releaseignore
+.bmp.yml
+npm-debug.log
+Gruntfile.coffee
+src
+doc
+README.md
