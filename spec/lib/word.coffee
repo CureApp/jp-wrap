@@ -25,6 +25,11 @@ describe 'Word', ->
             expect(Word.widthByStr 'メールアドレス').to.equal 14
 
 
+        it 'sameWidthオプションがtrueの時、全角文字と半角文字の幅を両方とも2として計算する', ->
+
+            expect(Word.widthByStr('ｱ|shin out|メールアドレス', true)).to.equal 36
+
+
     describe 'constructor', ->
 
         it '引数なしならstrに空文字列をセット', ->
@@ -38,6 +43,10 @@ describe 'Word', ->
 
             expect(new Word('CureApp').width).to.equal 7
 
+
+        it '第2引数にtrueを渡すと、全角文字と半角文字の幅を両方とも2として計算する', ->
+
+            expect(new Word('CureAppです', true).width).to.equal 18
 
 
     describe 'isAlphaNumeric', ->

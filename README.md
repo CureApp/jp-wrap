@@ -79,6 +79,7 @@ var jpWrap = require('jp-wrap');
 | half           | boolean | 半角文字の行頭禁則処理を行うかどうか        | false      |
 | breakAll       | boolean | trueだとcssのword-break:break-allと同じ挙動 | false      |
 | fullWidthSpace | boolean | 全角スペースが行頭にあった場合削除するか    | true       |
+| sameWidth      | boolean | 全角と半角文字の両方を幅2として計算するか   | false      |
 
 
 ### もっと内部をさわりたい方

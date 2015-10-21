@@ -10,10 +10,11 @@ class Word
     ###*
     @constructor
     @param {String} str
+    @param {Boolean} sameWidth 全角文字と半角文字の幅を両方とも2として計算するか
     ###
-    constructor: (@str = '') ->
+    constructor: (@str = '', @sameWidth = false) ->
 
-        @width = @constructor.widthByStr @str
+        @width = @constructor.widthByStr(@str, @sameWidth)
 
         @isAlphaNumeric = !!(@str.match /\w$/) # 半角英数で終わっているか
 
@@ -45,7 +46,7 @@ class Word
 
         if matched = @str.match regex
             @str = @str.slice(matched[1].length)
-            @width -= @constructor.widthByStr matched[1]
+            @width -= @constructor.widthByStr(matched[1], @sameWidth)
 
         return @
 
@@ -124,12 +125,15 @@ class Word
     ###*
     文字列の幅を計算
     現時点ではASCIIおよび半角カタカナ以外の半角は認識できない
+    全角文字と半角文字の幅を両方とも2として計算する場合は第2引数をtrueに
 
     @method widthByStr
     @private
     @static
     ###
-    @widthByStr: (str = '') ->
+    @widthByStr: (str = '', sameWidth = false) ->
+
+        return str.length * 2 if sameWidth
 
         fullWidths = (c for c in str when not c.match @halfWidthRegex).length
         return fullWidths + str.length

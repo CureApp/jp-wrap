@@ -42,6 +42,16 @@ describe 'JpWrap', ->
             expect(new JpWrap(100, half: 1).half).to.be.true
 
 
+        it 'sameWidthオプションをオプションから設定 デフォルトはfalse', ->
+
+            expect(new JpWrap().sameWidth).to.be.false
+            expect(new JpWrap(100, sameWidth: false).sameWidth).to.be.false
+            expect(new JpWrap(100, sameWidth: true).sameWidth).to.be.true
+            expect(new JpWrap(100, sameWidth: null).sameWidth).to.be.false
+            expect(new JpWrap(100, sameWidth: 0).sameWidth).to.be.false
+            expect(new JpWrap(100, sameWidth: 1).sameWidth).to.be.true
+
+
     describe 'isJoinable', ->
 
         it '2つのwordの長さがmaxWidthを超えたらfalse', ->
@@ -311,4 +321,21 @@ describe 'JpWrap', ->
                 'see_is_what_you_get'
                 'のこと。'
             ]
+
+
+        it 'sameWidth: trueなら、全角文字と半角文字の幅を両方とも2として計算する', ->
+
+            text = 'インスタンスの生成ですが、factory.createFromObject(obj) してください。'
+
+            lines = new JpWrap(20, sameWidth: true).wrap(text)
+
+            expect(lines).to.eql [
+                'インスタンスの生成で'
+                'すが、factory'
+                '.'
+                'createFrom'
+                'Object(obj'
+                ') してください。'
+            ]
+
 

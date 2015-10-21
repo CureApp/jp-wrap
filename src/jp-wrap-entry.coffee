@@ -13,6 +13,7 @@ copyright
 @param {Boolean} [options.trim=false] 入力文字列の改行を取り除くかどうか
 @param {Boolean} [options.breakAll] trueだとcssのword-break:break-allと同じ挙動をする
 @param {Boolean} [options.fullWidthSpace=true] 全角スペースが行頭にあった場合削除するか
+@param {Boolean} [options.sameWidth] 全角文字と半角文字の幅を両方とも2として計算する
 @return {String} 整形された文字列
 ###
 entry = (start, stop, options = {}) ->
