@@ -49,8 +49,7 @@ class Word
 
         if matched = @str.match regex
             @str = @str.slice(matched[1].length)
-            #@width -= @constructor.widthByStr(matched[1], {sameWidth: @sameWidth, regexs: @regexs})
-            @width -= @constructor.widthByStr(matched[1], @sameWidth)
+            @width -= @constructor.widthByStr(matched[1], {sameWidth: @sameWidth, regexs: @regexs})
 
         return @
 

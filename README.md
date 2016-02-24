@@ -80,7 +80,7 @@ var jpWrap = require('jp-wrap');
 | breakAll       | boolean | trueだとcssのword-break:break-allと同じ挙動 | false      |
 | fullWidthSpace | boolean | 全角スペースが行頭にあった場合削除するか    | true       |
 | sameWidth      | boolean | 全角と半角文字の両方を幅2として計算するか   | false      |
-| regExs         | array   | 幅の計算方法を正規表現で指定する。          | []         |
+| regexs         | array   | 幅の計算方法を正規表現で指定する            | []         |
 
 #### optionsの例
 
