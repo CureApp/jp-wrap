@@ -31,7 +31,6 @@ describe 'JpWrap', ->
             expect(new JpWrap(100, breakAll: 1).breakAll).to.be.true
 
 
-
         it 'halfオプションをオプションから設定 デフォルトはfalse', ->
 
             expect(new JpWrap().half).to.be.false
@@ -50,6 +49,14 @@ describe 'JpWrap', ->
             expect(new JpWrap(100, sameWidth: null).sameWidth).to.be.false
             expect(new JpWrap(100, sameWidth: 0).sameWidth).to.be.false
             expect(new JpWrap(100, sameWidth: 1).sameWidth).to.be.true
+
+
+        it 'regexsオプションをオプションから設定 デフォルトは空の配列', ->
+
+            expect(new JpWrap().regexs).to.have.length 0
+            expect(new JpWrap(100, regexs: [{pattern: /[a-z]/, width: 1}]).regexs).to.have.length 1
+            expect(new JpWrap(100, regexs: [{pattern: /[a-z]/, width: 1}]).regexs[0]).to.have.property 'width', 1
+            expect(new JpWrap(100, regexs: null).regexs).to.have.length 0
 
 
     describe 'isJoinable', ->
@@ -327,7 +334,7 @@ describe 'JpWrap', ->
 
             text = 'インスタンスの生成ですが、factory.createFromObject(obj) してください。'
 
-            lines = new JpWrap(20, sameWidth: true).wrap(text)
+            lines = new JpWrap(20, {sameWidth: true}).wrap(text)
 
             expect(lines).to.eql [
                 'インスタンスの生成で'
@@ -336,6 +343,47 @@ describe 'JpWrap', ->
                 'createFrom'
                 'Object(obj'
                 ') してください。'
+            ]
+
+
+        it 'regexs: [{pattern: /[a-z]/, width: 5}]なら、小文字のアルファベットを幅5で計算する', ->
+
+            text = 'インスタンスの生成ですが、factory.createFromObject(obj) してください。'
+
+            lines = new JpWrap(20, {regexs: [{pattern: /[a-z]/, width: 5}]}).wrap(text)
+
+            expect(lines).to.eql [
+                'インスタンスの生成で'
+                'すが、'
+                'fact'
+                'ory.'
+                'crea'
+                'teFr'
+                'omOb'
+                'ject'
+                '(obj)'
+                'してください。'
+            ]
+
+
+        it 'regexs: [{pattern: /[a-z]/, width: 5}, {pattern: /[A-Z]/, width: 10}]なら、小文字のアルファベットを幅5、大文字のアルファベットを幅10で計算する', ->
+
+            text = 'インスタンスの生成ですが、factory.createFromObject(obj) してください。'
+
+            lines = new JpWrap(20, {regexs: [{pattern: /[a-z]/, width: 5}, {pattern: /[A-Z]/, width: 10}]}).wrap(text)
+
+            expect(lines).to.eql [
+                'インスタンスの生成で'
+                'すが、'
+                'fact'
+                'ory.'
+                'crea'
+                'teF'
+                'rom'
+                'Obj'
+                'ect('
+                'obj) '
+                'してください。'
             ]
 
 

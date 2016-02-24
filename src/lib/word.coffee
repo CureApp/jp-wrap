@@ -10,11 +10,15 @@ class Word
     ###*
     @constructor
     @param {String} str
-    @param {Boolean} sameWidth 全角文字と半角文字の幅を両方とも2として計算するか
+    @param {Boolean} [options.sameWidth] 全角文字と半角文字の幅を両方とも2として計算する
+    @param {Object} [options.regexs] 幅の計算方法を正規表現で指定する
     ###
-    constructor: (@str = '', @sameWidth = false) ->
+    constructor: (@str = '', options = {}) ->
 
-        @width = @constructor.widthByStr(@str, @sameWidth)
+        @sameWidth = !! options.sameWidth
+        @regexs = (options.regexs ? [])
+
+        @width = @constructor.widthByStr(@str, {sameWidth: @sameWidth, regexs: @regexs})
 
         @isAlphaNumeric = !!(@str.match /\w$/) # 半角英数で終わっているか
 
@@ -32,7 +36,6 @@ class Word
         @str[@str.length - 1]
 
 
-
     ###*
     頭のスペースを取り除く 全角文字も取り除く場合は第1引数をtrueに
 
@@ -46,6 +49,7 @@ class Word
 
         if matched = @str.match regex
             @str = @str.slice(matched[1].length)
+            #@width -= @constructor.widthByStr(matched[1], {sameWidth: @sameWidth, regexs: @regexs})
             @width -= @constructor.widthByStr(matched[1], @sameWidth)
 
         return @
@@ -125,18 +129,44 @@ class Word
     ###*
     文字列の幅を計算
     現時点ではASCIIおよび半角カタカナ以外の半角は認識できない
-    全角文字と半角文字の幅を両方とも2として計算する場合は第2引数をtrueに
+    全角文字と半角文字の幅を両方とも2として計算する場合はsameWidthオプションをtrueに
+    正規表現で指定した文字の幅を指定して計算する場合はregexsオプションにpatternとwidthを持ったオブジェクトの配列を渡す
 
     @method widthByStr
     @private
     @static
     ###
-    @widthByStr: (str = '', sameWidth = false) ->
+    @widthByStr: (str = '', options = {}) ->
 
-        return str.length * 2 if sameWidth
+        sameWidth = !! options.sameWidth
+        regexs = options.regexs ? []
 
-        fullWidths = (c for c in str when not c.match @halfWidthRegex).length
-        return fullWidths + str.length
+        if sameWidth
+
+            return str.length * 2
+
+        else if Array.isArray(regexs) and regexs.length > 0
+
+            length = 0
+
+            for c in str
+                matched = false
+
+                for regexInfo in regexs
+
+                    if c.match(regexInfo.pattern)
+                        length += regexInfo.width
+                        matched = true
+                        break
+
+                length += 2 if not matched
+
+            return length
+
+        else
+
+            fullWidths = (c for c in str when not c.match @halfWidthRegex).length
+            return fullWidths + str.length
 
 
     ###*
