@@ -1,6 +1,6 @@
 {
   "name": "jp-wrap",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Japanese word wrap",
   "main": "dist/jp-wrap-entry.js",
   "scripts": {
