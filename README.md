@@ -80,7 +80,19 @@ var jpWrap = require('jp-wrap');
 | breakAll       | boolean | trueだとcssのword-break:break-allと同じ挙動 | false      |
 | fullWidthSpace | boolean | 全角スペースが行頭にあった場合削除するか    | true       |
 | sameWidth      | boolean | 全角と半角文字の両方を幅2として計算するか   | false      |
+| regexs         | array   | 幅の計算方法を正規表現で指定する            | []         |
 
+#### optionsの例
+
+小文字のアルファベットを幅3として計算する
+```js
+new JpWrap(100, {regExs: [{pattern:/[a-z]/, width: 3}]});
+```
+
+小文字のアルファベットを幅3、大文字のアルファベットを幅5として計算する
+```js
+new JpWrap(100, {regExs: [{pattern:/[a-z]/, width: 3}, {pattern:/[A-Z]/, width: 5}]});
+```
 
 ### もっと内部をさわりたい方
 

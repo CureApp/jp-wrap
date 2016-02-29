@@ -26,6 +26,7 @@ class JpWrap
     @param {Boolean} [options.breakAll] trueだとcssのword-break:break-allと同じ挙動をする
     @param {Boolean} [options.fullWidthSpace=true] 全角スペースが行頭にあった場合削除するか
     @param {Boolean} [options.sameWidth] 全角文字と半角文字の幅を両方とも2として計算する
+    @param {Object} [options.regexs] 幅の計算方法を正規表現で指定する
     ###
     constructor: (@width = @DEFAULT_WIDTH, options = {}) ->
 
@@ -33,7 +34,9 @@ class JpWrap
         @breakAll = !! options.breakAll
         @half = !! options.half
         @fullWidthSpace = !! (options.fullWidthSpace ? true)
+        @regexs = (options.regexs ? [])
         @sameWidth = !! options.sameWidth
+
 
     ###*
     textを分割し、行(String)の配列を取得
@@ -99,7 +102,7 @@ class JpWrap
 
         words = []
 
-        currentWord = new Word('', @sameWidth)
+        currentWord = new Word('', {sameWidth: @sameWidth, regexs: @regexs})
 
         for c in text
 
@@ -111,7 +114,7 @@ class JpWrap
 
                 continue
 
-            word = new Word(c, @sameWidth)
+            word = new Word(c, {sameWidth: @sameWidth, regexs: @regexs})
 
             if @isJoinable(currentWord, word)
 

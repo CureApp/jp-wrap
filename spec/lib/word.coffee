@@ -27,7 +27,20 @@ describe 'Word', ->
 
         it 'sameWidthオプションがtrueの時、全角文字と半角文字の幅を両方とも2として計算する', ->
 
-            expect(Word.widthByStr('ｱ|shin out|メールアドレス', true)).to.equal 36
+            options =
+                sameWidth: true
+
+            expect(Word.widthByStr('ｱ|shin out|メールアドレス', options)).to.equal 36
+
+        it 'regexsオプションに{pattern: /[A-Za-z0-9_]/, width: 5}の時、英数文字の幅を5として計算する', ->
+
+            options =
+                regexs:
+                    [
+                        {pattern: /[A-Za-z0-9_]/, width: 5}
+                    ]
+
+            expect(Word.widthByStr('ｱ|shin out|メールアドレス', options)).to.equal 57
 
 
     describe 'constructor', ->
@@ -44,9 +57,9 @@ describe 'Word', ->
             expect(new Word('CureApp').width).to.equal 7
 
 
-        it '第2引数にtrueを渡すと、全角文字と半角文字の幅を両方とも2として計算する', ->
+        it '第2引数に{sameWidth: true}を渡すと、全角文字と半角文字の幅を両方とも2として計算する', ->
 
-            expect(new Word('CureAppです', true).width).to.equal 18
+            expect(new Word('CureAppです', {sameWidth: true}).width).to.equal 18
 
 
     describe 'isAlphaNumeric', ->
