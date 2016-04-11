@@ -4,7 +4,7 @@
   "description": "Japanese word wrap",
   "main": "dist/jp-wrap-entry.js",
   "scripts": {
-    "test": "grunt",
+    "test": "mocha -r coffee-script/register -r spec/global.js spec/*.coffee spec/lib/*.coffee",
     "web-browser-check": "grunt build && open test-tools/index.html",
     "pack-check": "grunt build && node test-tools/run-packed.js",
     "bmp": "cc-bmp",

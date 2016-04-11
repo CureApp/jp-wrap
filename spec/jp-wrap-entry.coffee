@@ -9,28 +9,28 @@ describe 'entry', ->
 
         it 'is JpWrapクラス', ->
 
-            expect(entry.JpWrap).to.equal JpWrap
+            assert entry.JpWrap is JpWrap
 
 
     it '第2引数にobjectを与えた場合それがoptionsとして解釈される', ->
 
         wrap = entry(20, trim: true)
 
-        expect(wrap('あいう\nえお')).to.equal 'あいうえお'
+        assert wrap('あいう\nえお') is 'あいうえお'
 
 
     it '第2引数に数値を与えた場合それがstopとして解釈される', ->
 
         wrap = entry(2, 12)
 
-        expect(wrap('あいう\nえお')).to.equal '  あいう      \n  えお        '
+        assert wrap('あいう\nえお') is '  あいう      \n  えお        '
 
 
     it '第3引数にはoptionsを与えられる', ->
 
         wrap = entry(2, 12, trim: true)
 
-        expect(wrap('あいう\nえお')).to.equal '  あいうえお  '
+        assert wrap('あいう\nえお') is '  あいうえお  '
 
 
     it 'CoffeeScriptへの熱い思いを整形', ->
