@@ -7,22 +7,22 @@ describe 'Word', ->
 
         it '空文字列に対して0を返す', ->
 
-            expect(Word.widthByStr '').to.equal 0
+            assert Word.widthByStr('') is 0
 
 
         it '半角カタカナには1を返す', ->
 
-            expect(Word.widthByStr 'ｱ').to.equal 1
+            assert Word.widthByStr('ｱ') is 1
 
 
         it 'ASCIIは1の幅として数える', ->
 
-            expect(Word.widthByStr '|shin out|').to.equal 10
+            assert Word.widthByStr('|shin out|') is 10
 
 
         it '全角文字は2の幅として数える', ->
 
-            expect(Word.widthByStr 'メールアドレス').to.equal 14
+            assert Word.widthByStr('メールアドレス') is 14
 
 
         it 'sameWidthオプションがtrueの時、全角文字と半角文字の幅を両方とも2として計算する', ->
@@ -30,7 +30,7 @@ describe 'Word', ->
             options =
                 sameWidth: true
 
-            expect(Word.widthByStr('ｱ|shin out|メールアドレス', options)).to.equal 36
+            assert Word.widthByStr('ｱ|shin out|メールアドレス', options) is 36
 
         it 'regexsオプションに{pattern: /[A-Za-z0-9_]/, width: 5}の時、英数文字の幅を5として計算する', ->
 
@@ -40,38 +40,38 @@ describe 'Word', ->
                         {pattern: /[A-Za-z0-9_]/, width: 5}
                     ]
 
-            expect(Word.widthByStr('ｱ|shin out|メールアドレス', options)).to.equal 57
+            assert Word.widthByStr('ｱ|shin out|メールアドレス', options) is 57
 
 
     describe 'constructor', ->
 
         it '引数なしならstrに空文字列をセット', ->
 
-            expect(new Word().str).to.equal ''
+            assert new Word().str is ''
 
 
         it 'widthを設定', ->
 
-            expect(new Word().width).to.equal 0
+            assert new Word().width is 0
 
-            expect(new Word('CureApp').width).to.equal 7
+            assert new Word('CureApp').width is 7
 
 
         it '第2引数に{sameWidth: true}を渡すと、全角文字と半角文字の幅を両方とも2として計算する', ->
 
-            expect(new Word('CureAppです', {sameWidth: true}).width).to.equal 18
+            assert new Word('CureAppです', {sameWidth: true}).width is 18
 
 
     describe 'isAlphaNumeric', ->
 
         it '末尾がalphaNumericのときtrueとなる', ->
 
-            expect(new Word('いえ、違いますa').isAlphaNumeric).to.be.true
+            assert new Word('いえ、違いますa').isAlphaNumeric is true
 
 
         it '末尾がalphaNumericでないときfalseとなる', ->
 
-            expect(new Word('CureApp禁煙').isAlphaNumeric).to.be.false
+            assert new Word('CureApp禁煙').isAlphaNumeric is false
 
 
         it 'appendしても同じく、末尾のalphaNumericを反映する', ->
@@ -80,24 +80,24 @@ describe 'Word', ->
 
             word.appendText('2')
 
-            expect(word.str).to.equal 'CureApp禁煙2'
-            expect(word.isAlphaNumeric).to.be.true
+            assert word.str is 'CureApp禁煙2'
+            assert word.isAlphaNumeric is true
 
             word.appendText('、出た!')
 
-            expect(word.str).to.equal 'CureApp禁煙2、出た!'
-            expect(word.isAlphaNumeric).to.be.false
+            assert word.str is 'CureApp禁煙2、出た!'
+            assert word.isAlphaNumeric is false
 
 
     describe 'last', ->
 
         it 'strが空文字列ならundefinedを返す', ->
 
-            expect(new Word().last()).to.be.undefined
+            assert new Word().last() is undefined
 
         it '文字があれば最後の文字を返す', ->
 
-            expect(new Word('やまびこ').last()).to.equal 'こ'
+            assert new Word('やまびこ').last() is 'こ'
 
 
 
@@ -105,31 +105,31 @@ describe 'Word', ->
 
         it 'strが空白を含まないなら何もしない', ->
 
-            expect(new Word('あいう').ltrim().str).to.equal 'あいう'
+            assert new Word('あいう').ltrim().str is 'あいう'
 
 
         it 'strが空白を含むなら空白のみ削除する', ->
 
             word = new Word('   it was rainy ').ltrim()
 
-            expect(word.str).to.equal 'it was rainy '
-            expect(word.width).to.equal 13
+            assert word.str is 'it was rainy '
+            assert word.width is 13
 
 
         it '引数がないなら、strが全角を含んでも半角空白のみ削除する', ->
 
             word = new Word(' 　  it was rainy ').ltrim()
 
-            expect(word.str).to.equal '　  it was rainy '
-            expect(word.width).to.equal 17
+            assert word.str is '　  it was rainy '
+            assert word.width is 17
 
 
         it '引数がtrueなら、全角空白も削除する', ->
 
             word = new Word(' 　  it was rainy ').ltrim(true)
 
-            expect(word.str).to.equal 'it was rainy '
-            expect(word.width).to.equal 13
+            assert word.str is 'it was rainy '
+            assert word.width is 13
 
 
 
@@ -143,9 +143,9 @@ describe 'Word', ->
 
             word1.append word2
 
-            expect(word1.str).to.equal 'ABCからZまで'
-            expect(word1.width).to.equal 12
-            expect(word1.isAlphaNumeric).to.be.false
+            assert word1.str is 'ABCからZまで'
+            assert word1.width is 12
+            assert word1.isAlphaNumeric is false
 
 
         it '改行がある場合はエラー', ->
@@ -156,7 +156,7 @@ describe 'Word', ->
 
             word2 = new Word('Zまで')
 
-            expect(-> word1.append word2).to.throw 'hasLineBreak'
+            assert.throws(-> word1.append word2) is 'hasLineBreak'
 
 
 
@@ -170,9 +170,9 @@ describe 'Word', ->
 
             word.appendText str
 
-            expect(word.str).to.equal 'ABCからZまで'
-            expect(word.width).to.equal 12
-            expect(word.isAlphaNumeric).to.be.false
+            assert word.str is 'ABCからZまで'
+            assert word.width is 12
+            assert word.isAlphaNumeric is false
 
 
         it '改行がある場合はエラー', ->
@@ -181,7 +181,7 @@ describe 'Word', ->
 
             word.appendLineBreak('\n')
 
-            expect(-> word.appendText 'Yまで').to.throw 'hasLineBreak'
+            assert.throws(-> word.appendText 'Yまで') is 'hasLineBreak'
 
 
 
@@ -193,39 +193,39 @@ describe 'Word', ->
 
             word.appendLineBreak('\n')
 
-            expect(word.str).to.equal 'です。'
-            expect(word.width).to.equal 6
-            expect(word.lbStr).to.equal '\n'
+            assert word.str is 'です。'
+            assert word.width is 6
+            assert word.lbStr is '\n'
 
 
         it 'isAlphaNumericはfalseになる', ->
 
             word = new Word('abc123')
 
-            expect(word.isAlphaNumeric).to.be.true
+            assert word.isAlphaNumeric is true
 
             word.appendLineBreak('\n')
 
-            expect(word.isAlphaNumeric).to.be.false
+            assert word.isAlphaNumeric is false
 
 
     describe 'hasStr', ->
 
         it '空文字列の場合はfalse', ->
 
-            expect(new Word().hasStr()).to.be.false
-            expect(new Word('').hasStr()).to.be.false
+            assert new Word().hasStr() is false
+            assert new Word('').hasStr() is false
 
 
         it '改行が加わっても空文字列の場合はfalse', ->
 
-            expect(new Word().appendLineBreak('\n').hasStr()).to.be.false
+            assert new Word().appendLineBreak('\n').hasStr() is false
 
 
         it '空文字列でなければtrue', ->
 
-            expect(new Word('はい').hasStr()).to.be.true
-            expect(new Word(' ').hasStr()).to.be.true
+            assert new Word('はい').hasStr() is true
+            assert new Word(' ').hasStr() is true
 
 
 
@@ -235,9 +235,9 @@ describe 'Word', ->
 
             word = new Word()
 
-            expect(word.hasLineBreak()).to.be.false
+            assert word.hasLineBreak() is false
 
             word.appendLineBreak('\n')
 
-            expect(word.hasLineBreak()).to.be.true
+            assert word.hasLineBreak() is true
 
