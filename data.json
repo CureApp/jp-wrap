@@ -1,0 +1,481 @@
+{
+    "project": {},
+    "files": {
+        "src/lib/jp-wrap.coffee": {
+            "name": "src/lib/jp-wrap.coffee",
+            "modules": {
+                "jp-wrap": 1
+            },
+            "classes": {
+                "JpWrap": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/lib/word.coffee": {
+            "name": "src/lib/word.coffee",
+            "modules": {},
+            "classes": {
+                "Word": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/jp-wrap-entry.coffee": {
+            "name": "src/jp-wrap-entry.coffee",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "jp-wrap": {
+            "name": "jp-wrap",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "JpWrap": 1,
+                "Word": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "src/lib/word.coffee",
+            "line": 2,
+            "description": "日本語の禁則処理を行って改行する"
+        }
+    },
+    "classes": {
+        "JpWrap": {
+            "name": "JpWrap",
+            "shortname": "JpWrap",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "jp-wrap",
+            "file": "src/lib/jp-wrap.coffee",
+            "line": 6,
+            "description": "日本語の禁則処理を行って改行する"
+        },
+        "Word": {
+            "name": "Word",
+            "shortname": "Word",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "jp-wrap",
+            "namespace": "",
+            "file": "src/lib/word.coffee",
+            "line": 2,
+            "description": "文字 str とその幅 width を持つオブジェクト"
+        }
+    },
+    "elements": {},
+    "classitems": [
+        {
+            "file": "src/lib/jp-wrap.coffee",
+            "line": 20,
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "width",
+                    "description": "半角1, 全角2としたときの全体の幅",
+                    "type": "Number",
+                    "optional": true,
+                    "optdefault": "100"
+                },
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "half",
+                            "description": "半角文字の行頭禁則処理を行うか",
+                            "type": "Boolean",
+                            "optional": true
+                        },
+                        {
+                            "name": "trim",
+                            "description": "入力文字列の改行を取り除くかどうか",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "true"
+                        },
+                        {
+                            "name": "breakAll",
+                            "description": "trueだとcssのword-break:break-allと同じ挙動をする",
+                            "type": "Boolean",
+                            "optional": true
+                        },
+                        {
+                            "name": "fullWidthSpace",
+                            "description": "全角スペースが行頭にあった場合削除するか",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "true"
+                        },
+                        {
+                            "name": "sameWidth",
+                            "description": "全角文字と半角文字の幅を両方とも2として計算する",
+                            "type": "Boolean",
+                            "optional": true
+                        },
+                        {
+                            "name": "regexs",
+                            "description": "幅の計算方法を正規表現で指定する",
+                            "type": "Object",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "class": "JpWrap",
+            "module": "jp-wrap"
+        },
+        {
+            "file": "src/lib/jp-wrap.coffee",
+            "line": 41,
+            "description": "textを分割し、行(String)の配列を取得",
+            "itemtype": "method",
+            "name": "wrap",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "text",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "lines 分割された行の配列",
+                "type": "Array(String)"
+            },
+            "class": "JpWrap",
+            "module": "jp-wrap"
+        },
+        {
+            "file": "src/lib/jp-wrap.coffee",
+            "line": 54,
+            "description": "textを分割し、行(Wordオブジェクト)の配列を取得\n戦略：文字列を単語ごとに分解してから、行を埋めていく",
+            "itemtype": "method",
+            "name": "getLines",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "text",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "lines 分割された行の配列",
+                "type": "Array(String)"
+            },
+            "class": "JpWrap",
+            "module": "jp-wrap"
+        },
+        {
+            "file": "src/lib/jp-wrap.coffee",
+            "line": 92,
+            "description": "与えられた文字列を単語に分割\n行頭に来ることができないものを前の文字の続きにして分割",
+            "itemtype": "method",
+            "name": "splitTextIntoWords",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "text",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Array(Word)"
+            },
+            "class": "JpWrap",
+            "module": "jp-wrap"
+        },
+        {
+            "file": "src/lib/jp-wrap.coffee",
+            "line": 132,
+            "description": "word1にword2をjoinしていいのかどうか",
+            "itemtype": "method",
+            "name": "isJoinable",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "word1",
+                    "description": "",
+                    "type": "Word"
+                },
+                {
+                    "name": "word2",
+                    "description": "",
+                    "type": "Word"
+                }
+            ],
+            "class": "JpWrap",
+            "module": "jp-wrap"
+        },
+        {
+            "file": "src/lib/word.coffee",
+            "line": 10,
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "str",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "options.sameWidth",
+                    "description": "全角文字と半角文字の幅を両方とも2として計算する",
+                    "type": "Boolean",
+                    "optional": true
+                },
+                {
+                    "name": "options.regexs",
+                    "description": "幅の計算方法を正規表現で指定する",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "class": "Word",
+            "module": "jp-wrap"
+        },
+        {
+            "file": "src/lib/word.coffee",
+            "line": 28,
+            "description": "最後の文字を取得",
+            "itemtype": "method",
+            "name": "last",
+            "return": {
+                "description": "lastChar",
+                "type": "String"
+            },
+            "class": "Word",
+            "module": "jp-wrap"
+        },
+        {
+            "file": "src/lib/word.coffee",
+            "line": 39,
+            "description": "頭のスペースを取り除く 全角文字も取り除く場合は第1引数をtrueに",
+            "itemtype": "method",
+            "name": "ltrim",
+            "params": [
+                {
+                    "name": "fullWidths",
+                    "description": "全角スペースも取り除く",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "this",
+                "type": "Word"
+            },
+            "class": "Word",
+            "module": "jp-wrap"
+        },
+        {
+            "file": "src/lib/word.coffee",
+            "line": 57,
+            "description": "与えられたWordを末尾に追加",
+            "itemtype": "method",
+            "name": "append",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "word",
+                    "description": "",
+                    "type": "Word"
+                }
+            ],
+            "return": {
+                "description": "this",
+                "type": "Word"
+            },
+            "class": "Word",
+            "module": "jp-wrap"
+        },
+        {
+            "file": "src/lib/word.coffee",
+            "line": 78,
+            "description": "与えられた文字列を末尾に追加",
+            "itemtype": "method",
+            "name": "append",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "str",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "this",
+                "type": "Word"
+            },
+            "class": "Word",
+            "module": "jp-wrap"
+        },
+        {
+            "file": "src/lib/word.coffee",
+            "line": 91,
+            "description": "改行文字を末尾に追加",
+            "itemtype": "method",
+            "name": "appendLineBreak",
+            "return": {
+                "description": "this",
+                "type": "Word"
+            },
+            "class": "Word",
+            "module": "jp-wrap"
+        },
+        {
+            "file": "src/lib/word.coffee",
+            "line": 104,
+            "description": "文字を含むかどうか",
+            "itemtype": "method",
+            "name": "hasStr",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Word",
+            "module": "jp-wrap"
+        },
+        {
+            "file": "src/lib/word.coffee",
+            "line": 116,
+            "description": "改行文字を(末尾に)含むかどうか",
+            "itemtype": "method",
+            "name": "hasLineBreak",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Word",
+            "module": "jp-wrap"
+        },
+        {
+            "file": "src/lib/word.coffee",
+            "line": 128,
+            "description": "文字列の幅を計算\n現時点ではASCIIおよび半角カタカナ以外の半角は認識できない\n全角文字と半角文字の幅を両方とも2として計算する場合はsameWidthオプションをtrueに\n正規表現で指定した文字の幅を指定して計算する場合はregexsオプションにpatternとwidthを持ったオブジェクトの配列を渡す",
+            "itemtype": "method",
+            "name": "widthByStr",
+            "access": "private",
+            "tagname": "",
+            "static": 1,
+            "class": "Word",
+            "module": "jp-wrap"
+        },
+        {
+            "file": "src/lib/word.coffee",
+            "line": 171,
+            "description": "ASCII文字と半角カタカナにマッチする正規表現",
+            "itemtype": "property",
+            "name": "halfWidthRegex",
+            "type": "RegExp",
+            "access": "private",
+            "tagname": "",
+            "static": 1,
+            "class": "Word",
+            "module": "jp-wrap"
+        },
+        {
+            "file": "src/jp-wrap-entry.coffee",
+            "line": 4,
+            "description": "[substack/node-wordwrap](https://github.com/substack/node-wordwrap)とほぼ同じAPIに\nhttps://github.com/substack/node-wordwrap/blob/master/LICENSE\ncopyright",
+            "params": [
+                {
+                    "name": "start",
+                    "description": "単独で指定した場合、文字列の幅。この場合第2引数がoptionsとして扱われる",
+                    "type": "Number"
+                },
+                {
+                    "name": "stop",
+                    "description": "指定された場合、`stop - start`の幅で行い、左右にstartだけのpaddingをつける",
+                    "type": "Number",
+                    "optional": true
+                },
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "half",
+                            "description": "半角文字の行頭禁則処理を行うか",
+                            "type": "Boolean",
+                            "optional": true
+                        },
+                        {
+                            "name": "trim",
+                            "description": "入力文字列の改行を取り除くかどうか",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "breakAll",
+                            "description": "trueだとcssのword-break:break-allと同じ挙動をする",
+                            "type": "Boolean",
+                            "optional": true
+                        },
+                        {
+                            "name": "fullWidthSpace",
+                            "description": "全角スペースが行頭にあった場合削除するか",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "true"
+                        },
+                        {
+                            "name": "sameWidth",
+                            "description": "全角文字と半角文字の幅を両方とも2として計算する",
+                            "type": "Boolean",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "整形された文字列",
+                "type": "String"
+            },
+            "class": "",
+            "module": "jp-wrap"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "Missing item type",
+            "line": " src/lib/jp-wrap.coffee:20"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/lib/word.coffee:10"
+        },
+        {
+            "message": "Missing item type\n[substack/node-wordwrap](https://github.com/substack/node-wordwrap)とほぼ同じAPIに\nhttps://github.com/substack/node-wordwrap/blob/master/LICENSE\ncopyright",
+            "line": " src/jp-wrap-entry.coffee:4"
+        }
+    ]
+}
